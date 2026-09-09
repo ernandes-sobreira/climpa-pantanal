@@ -1,0 +1,13 @@
+cobrade,descricao_tipologia,grupo_desastre,eventos,total_afetados
+11110,Outros,Outros,1,7591
+11420,Erosão,Outros,1,0
+12100,Inundações,Hidrológico,3,0
+12200,Enxurradas,Hidrológico,1,3500
+13214,Chuvas Intensas,Hidrológico,5,12534
+13310,Onda de Calor e Baixa Umidade,Climatológico,1,0
+14110,Estiagem e Seca,Climatológico,1,0
+14120,Estiagem e Seca,Climatológico,2,15672
+14131,Incêndio Florestal,Climatológico,3,7591
+14132,Incêndio Florestal,Climatológico,5,2906
+14140,Onda de Calor e Baixa Umidade,Outros,1,0
+15230,Outros,Outros,3,11567

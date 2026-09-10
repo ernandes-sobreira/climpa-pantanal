@@ -1,151 +1,201 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Painel ambiental e estatístico de Barão de Melgaço, Mato Grosso." />
-  <title>Barão Ambiental | Barão de Melgaço–MT</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
-  <script src="app.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0e2230">
+  <meta name="description" content="Barão-Pantanal: painel ambiental e estatístico de Barão de Melgaço, Mato Grosso.">
+  <title>Barão-Pantanal | Barão de Melgaço–MT</title>
+  <link rel="stylesheet" href="styles.css?v=20260909d">
+  <script src="app.js?v=20260909d" defer></script>
 </head>
 <body>
-  <header class="hero">
-    <nav class="topbar shell">
-      <div class="brand"><span class="brand-dot"></span> BARÃO AMBIENTAL</div>
-      <a class="repo-link" href="https://github.com/ernandes-sobreira/climpa-pantanal" target="_blank" rel="noopener">GitHub ↗</a>
-    </nav>
-    <div class="hero-inner shell">
-      <p class="eyebrow">PANTANAL • MATO GROSSO • IBGE 5101605</p>
-      <h1>O ambiente contado<br>pelos dados.</h1>
-      <p class="hero-copy">Clima, fogo e impactos em Barão de Melgaço. Uma plataforma aberta para integrar água, uso da terra, vegetação e carbono à medida que as séries forem incorporadas.</p>
-      <div class="hero-meta">
-        <span><strong>11.374,9 km²</strong><small>área analisada</small></span>
-        <span><strong>1991–2024</strong><small>impactos</small></span>
-        <span><strong>2003–2024</strong><small>focos INPE</small></span>
-        <span id="climatePeriod"><strong>carregando…</strong><small>série climática</small></span>
-      </div>
+<header class="hero">
+  <div class="shell topbar">
+    <div>
+      <div class="brand"><span class="dot"></span> BARÃO-PANTANAL</div>
+      <div class="brand-sub">Painel Ambiental de Barão de Melgaço</div>
     </div>
-  </header>
+    <a class="repo" href="https://github.com/ernandes-sobreira/climpa-pantanal" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="shell hero-body">
+    <p class="eyebrow light">PANTANAL • MATO GROSSO • IBGE 5101605</p>
+    <h1>Barão de Melgaço<br>pelos dados.</h1>
+    <p class="lede">Clima, fogo e impactos ambientais em uma única plataforma. As estatísticas são recalculadas a partir das séries carregadas.</p>
+    <div class="hero-metrics">
+      <div><strong>11.374,9 km²</strong><span>área municipal</span></div>
+      <div><strong>2003–2024</strong><span>focos de calor</span></div>
+      <div><strong>1991–2024</strong><span>desastres</span></div>
+      <div id="heroClimate"><strong>carregando…</strong><span>clima</span></div>
+    </div>
+  </div>
+</header>
 
-  <main>
-    <section class="shell kpi-grid" aria-label="Indicadores principais">
-      <article class="kpi fire"><span>Pico de focos</span><strong>3.817</strong><small>2020</small></article>
-      <article class="kpi"><span>Focos em 2024</span><strong>2.032</strong><small>2º maior valor da série</small></article>
-      <article class="kpi"><span>Registros de desastres</span><strong>27</strong><small>1991–2024</small></article>
-      <article class="kpi" id="kpiClimate"><span>Clima</span><strong>ERA5</strong><small>carregando série municipal…</small></article>
-    </section>
+<main>
+  <section class="shell kpis">
+    <article class="kpi hot"><span>Pico de focos</span><strong>3.817</strong><small>2020</small></article>
+    <article class="kpi"><span>Segundo maior</span><strong>2.032</strong><small>2024</small></article>
+    <article class="kpi"><span>Desastres registrados</span><strong>27</strong><small>1991–2024</small></article>
+    <article class="kpi" id="kpiClimate"><span>Série climática</span><strong>—</strong><small>carregando…</small></article>
+  </section>
 
-    <nav class="section-nav shell" aria-label="Seções da plataforma">
-      <button class="tab-btn active" data-target="visao">Visão geral</button>
-      <button class="tab-btn" data-target="clima">Clima</button>
-      <button class="tab-btn" data-target="relacoes">Fogo × clima</button>
-      <button class="tab-btn" data-target="estatistica">Estatística</button>
-      <button class="tab-btn" data-target="dados">Dados & camadas</button>
-    </nav>
+  <nav class="tabs-wrap" aria-label="Seções">
+    <div class="shell tabs">
+      <button class="tab active" data-tab="visao">Visão geral</button>
+      <button class="tab" data-tab="clima">Clima</button>
+      <button class="tab" data-tab="relacoes">Fogo × clima</button>
+      <button class="tab" data-tab="estatistica">Estatística</button>
+      <button class="tab" data-tab="dados">Dados</button>
+    </div>
+  </nav>
 
-    <section id="visao" class="panel-section shell active-section">
-      <div class="section-heading">
-        <div><p class="eyebrow dark">O QUE JÁ SABEMOS</p><h2>Fogo e impactos</h2></div>
-        <p>As séries abaixo já estão incorporadas ao repositório e não dependem de consulta externa.</p>
-      </div>
-      <div class="grid-2">
-        <article class="card chart-card"><div class="card-head"><div><span class="tag">INPE</span><h3>Focos de calor por ano</h3></div><span class="mini">2003–2024</span></div><div class="chart-wrap"><canvas id="fireChart"></canvas></div></article>
-        <article class="card chart-card"><div class="card-head"><div><span class="tag">IMPACTOS</span><h3>Eventos e pessoas afetadas</h3></div><span class="mini">1991–2024</span></div><div class="chart-wrap"><canvas id="impactChart"></canvas></div></article>
-      </div>
-      <div class="grid-3 insight-row">
-        <article class="insight"><span class="number">2020</span><h3>ano crítico</h3><p>3.817 focos, 6 registros de desastres e 15.182 pessoas afetadas na base consolidada.</p></article>
-        <article class="insight"><span class="number" id="senFire">+8,4</span><h3>Sen: focos/ano</h3><p id="mkFireText">A série não apresenta tendência monotônica estatisticamente significativa pelo Mann–Kendall.</p></article>
-        <article class="insight warning"><span class="number">8</span><h3>registros de incêndio</h3><p>Somando as duas tipologias COBRADE de incêndio florestal presentes no histórico municipal.</p></article>
-      </div>
-      <article class="card full-card">
-        <div class="card-head"><div><span class="tag">TIPOLOGIAS</span><h3>Desastres registrados</h3></div></div>
-        <div id="typeBars" class="type-bars"></div>
+  <section id="visao" class="panel active shell">
+    <div class="heading">
+      <div><p class="eyebrow">SÍNTESE</p><h2>Principais achados</h2></div>
+      <p>O que os dados disponíveis sustentam hoje — sem transformar correlação em causalidade.</p>
+    </div>
+    <div id="findings" class="findings">
+      <article class="finding"><b>2020</b><h3>pico excepcional de fogo</h3><p>3.817 focos de calor, o maior valor de 2003–2024.</p></article>
+      <article class="finding"><b id="recentRatio">—</b><h3>período recente mais intenso</h3><p id="recentText">Calculando…</p></article>
+      <article class="finding accent"><b id="strongestR">…</b><h3>relação fogo × clima</h3><p id="strongestText">Aguardando a série climática.</p></article>
+      <article class="finding"><b id="trendFinding">…</b><h3>mudança climática local</h3><p id="trendFindingText">Aguardando a série climática.</p></article>
+    </div>
+
+    <div class="grid2">
+      <article class="card chart-card">
+        <div class="cardhead"><div><span class="tag">INPE</span><h3>Focos de calor</h3></div><span class="period">2003–2024</span></div>
+        <div class="chartbox"><canvas id="fireChart" aria-label="Focos de calor anuais"></canvas></div>
+        <div id="fireStats" class="stats"></div>
       </article>
-    </section>
+      <article class="card chart-card">
+        <div class="cardhead"><div><span class="tag">IMPACTOS</span><h3>Eventos e pessoas afetadas</h3></div><span class="period">1991–2024</span></div>
+        <div class="chartbox"><canvas id="impactChart" aria-label="Eventos e pessoas afetadas"></canvas></div>
+        <p class="note">Barras = registros de desastre; linha = pessoas afetadas.</p>
+      </article>
+    </div>
 
-    <section id="clima" class="panel-section shell">
-      <div class="section-heading">
-        <div><p class="eyebrow dark">SÉRIE CLIMÁTICA</p><h2>Como o clima está mudando?</h2></div>
-        <p>A plataforma lê a base climática já existente no repositório <code>clima-pantanal</code> e filtra automaticamente Barão de Melgaço.</p>
+    <article class="card">
+      <div class="cardhead"><div><span class="tag">COBRADE</span><h3>Tipologias registradas</h3></div></div>
+      <div id="typeBars" class="typebars"></div>
+    </article>
+  </section>
+
+  <section id="clima" class="panel shell">
+    <div class="heading">
+      <div><p class="eyebrow">CLIMA</p><h2>Tendências em Barão de Melgaço</h2></div>
+      <p>Dados mensais são agregados por ano antes dos testes: chuva é somada; temperatura, umidade e índice de calor são médias anuais.</p>
+    </div>
+    <div id="climateNotice" class="notice loading">Carregando e agregando a série mensal de Barão de Melgaço…</div>
+    <article class="card chart-card">
+      <div class="cardhead controls">
+        <div><span class="tag">TENDÊNCIA ANUAL</span><h3 id="climateTitle">Precipitação anual</h3></div>
+        <select id="climateVariable" aria-label="Variável climática">
+          <option value="rain">Precipitação anual</option>
+          <option value="temp">Temperatura média</option>
+          <option value="tmax">Temperatura máxima média</option>
+          <option value="tmin">Temperatura mínima média</option>
+          <option value="humidity">Umidade relativa média</option>
+          <option value="heat_index">Índice de calor médio</option>
+          <option value="heat_max">Índice de calor máximo</option>
+        </select>
       </div>
-      <div id="climateNotice" class="notice loading">Carregando a série climática…</div>
-      <article class="card chart-card wide">
-        <div class="card-head controls-head">
-          <div><span class="tag">TENDÊNCIA</span><h3 id="climateChartTitle">Clima anual</h3></div>
-          <select id="climateVariable" aria-label="Variável climática">
-            <option value="rain">Precipitação total</option>
+      <div class="chartbox tall"><canvas id="climateChart"></canvas></div>
+      <div id="climateStats" class="stats"></div>
+    </article>
+
+    <article class="card">
+      <div class="cardhead"><div><span class="tag">TODAS AS VARIÁVEIS</span><h3>Resumo das tendências</h3></div></div>
+      <div class="table-scroll"><table id="trendTable"><thead><tr><th>Variável</th><th>Sen / ano</th><th>MK τ</th><th>p</th><th>R²</th><th>Leitura</th></tr></thead><tbody><tr><td colspan="6">Aguardando clima…</td></tr></tbody></table></div>
+    </article>
+  </section>
+
+  <section id="relacoes" class="panel shell">
+    <div class="heading">
+      <div><p class="eyebrow">RELAÇÕES</p><h2>O que acompanha os anos de mais fogo?</h2></div>
+      <p>São usados apenas anos com dados climáticos e focos simultaneamente.</p>
+    </div>
+    <div class="grid2">
+      <article class="card chart-card">
+        <div class="cardhead controls">
+          <div><span class="tag">DISPERSÃO</span><h3>Focos × clima</h3></div>
+          <select id="scatterVariable">
+            <option value="rain">Precipitação anual</option>
             <option value="temp">Temperatura média</option>
-            <option value="tmax">Temperatura máxima</option>
-            <option value="tmin">Temperatura mínima</option>
+            <option value="tmax">Temperatura máxima média</option>
+            <option value="tmin">Temperatura mínima média</option>
             <option value="humidity">Umidade relativa</option>
-            <option value="heat_index">Índice de calor</option>
+            <option value="heat_index">Índice de calor médio</option>
+            <option value="heat_max">Índice de calor máximo</option>
           </select>
         </div>
-        <div class="chart-wrap tall"><canvas id="climateChart"></canvas></div>
-        <div id="climateStats" class="stat-strip"></div>
+        <div class="chartbox"><canvas id="scatterChart"></canvas></div>
+        <div id="scatterStats" class="stats"></div>
       </article>
-    </section>
-
-    <section id="relacoes" class="panel-section shell">
-      <div class="section-heading">
-        <div><p class="eyebrow dark">RELAÇÕES AMBIENTAIS</p><h2>O que acompanha o fogo?</h2></div>
-        <p>Correlação não implica causalidade. Aqui o objetivo é encontrar sinais fortes para orientar hipóteses e análises posteriores.</p>
-      </div>
-      <div class="grid-2">
-        <article class="card chart-card">
-          <div class="card-head controls-head"><div><span class="tag">DISPERSÃO</span><h3>Focos × variável ambiental</h3></div><select id="scatterVariable"><option value="rain">Precipitação</option><option value="temp">Temperatura média</option><option value="tmax">Temperatura máxima</option><option value="tmin">Temperatura mínima</option><option value="humidity">Umidade</option><option value="heat_index">Índice de calor</option></select></div>
-          <div class="chart-wrap"><canvas id="scatterChart"></canvas></div>
-          <div id="scatterStats" class="stat-strip"></div>
-        </article>
-        <article class="card"><div class="card-head"><div><span class="tag">RANKING</span><h3>Associações com focos</h3></div></div><div id="correlationRanking" class="ranking"><p class="muted">Aguardando clima…</p></div><p class="footnote">Coeficientes calculados apenas nos anos em que clima e focos possuem dados simultâneos.</p></article>
-      </div>
-      <article class="card full-card caution"><strong>Atenção na interpretação dos impactos:</strong> a própria série de desastres contém categorias de incêndio florestal. Por isso, associação entre focos e número de desastres/pessoas afetadas é descritiva e parcialmente dependente da construção das bases; não deve ser tratada como efeito causal.</article>
-    </section>
-
-    <section id="estatistica" class="panel-section shell">
-      <div class="section-heading">
-        <div><p class="eyebrow dark">NÚCLEO ANALÍTICO</p><h2>Estatística principal</h2></div>
-        <p>Resultados calculados no próprio navegador a partir dos dados carregados. Nada é digitado manualmente nas tabelas de resultado.</p>
-      </div>
-      <div class="grid-2">
-        <article class="card"><div class="card-head"><div><span class="tag">CORRELAÇÃO</span><h3>Matriz de Pearson</h3></div></div><div id="corrMatrix" class="matrix"><p class="muted">Aguardando clima…</p></div></article>
-        <article class="card"><div class="card-head"><div><span class="tag">MODELO</span><h3>Regressão múltipla do fogo</h3></div></div><div id="multiReg" class="model-box"><p class="muted">Aguardando clima…</p></div></article>
-      </div>
-      <div class="grid-2">
-        <article class="card chart-card"><div class="card-head"><div><span class="tag">PCA</span><h3>Anos no espaço ambiental</h3></div></div><div class="chart-wrap"><canvas id="pcaChart"></canvas></div><div id="pcaInfo" class="stat-strip"></div></article>
-        <article class="card"><div class="card-head"><div><span class="tag">PCA</span><h3>Contribuição das variáveis</h3></div></div><div id="pcaLoadings" class="loading-table"><p class="muted">Aguardando clima…</p></div></article>
-      </div>
-      <article class="card methods">
-        <h3>Métodos implementados</h3>
-        <div class="method-grid">
-          <div><strong>Mann–Kendall</strong><span>tendência monotônica, com correção para empates</span></div>
-          <div><strong>Sen</strong><span>inclinação robusta mediana entre pares</span></div>
-          <div><strong>Regressão linear</strong><span>inclinação e R²</span></div>
-          <div><strong>Pearson / Spearman</strong><span>associação linear e monotônica</span></div>
-          <div><strong>Regressão múltipla</strong><span>log(1 + focos), preditores padronizados</span></div>
-          <div><strong>PCA</strong><span>matriz padronizada; autodecomposição da correlação</span></div>
-        </div>
+      <article class="card">
+        <div class="cardhead"><div><span class="tag">RANKING</span><h3>Relações com focos</h3></div></div>
+        <div id="relationRanking"><p class="muted">Aguardando clima…</p></div>
+        <p class="note">Ordenado pela magnitude da correlação de Pearson. R² refere-se à regressão linear simples.</p>
       </article>
-    </section>
+    </div>
+    <article id="relationFinding" class="callout">Aguardando a série climática para produzir a interpretação.</article>
+  </section>
 
-    <section id="dados" class="panel-section shell">
-      <div class="section-heading">
-        <div><p class="eyebrow dark">TRANSPARÊNCIA</p><h2>Dados e próximas camadas</h2></div>
-        <p>A plataforma diferencia o que já está carregado do que está previsto no pipeline.</p>
+  <section id="estatistica" class="panel shell">
+    <div class="heading">
+      <div><p class="eyebrow">NÚCLEO ANALÍTICO</p><h2>Análises estatísticas principais</h2></div>
+      <p>Resultados calculados no navegador, usando a série anual agregada de Barão de Melgaço.</p>
+    </div>
+    <div class="grid2">
+      <article class="card">
+        <div class="cardhead"><div><span class="tag">CORRELAÇÃO</span><h3>Matriz de Pearson</h3></div></div>
+        <div id="corrMatrix" class="matrix"><p class="muted">Aguardando clima…</p></div>
+      </article>
+      <article class="card">
+        <div class="cardhead"><div><span class="tag">REGRESSÃO MÚLTIPLA</span><h3>Modelo exploratório do fogo</h3></div></div>
+        <div id="multiReg"><p class="muted">Aguardando clima…</p></div>
+        <p class="note">Resposta = log(1 + focos). Preditores padronizados: precipitação, temperatura máxima média e umidade relativa.</p>
+      </article>
+    </div>
+    <div class="grid2">
+      <article class="card chart-card">
+        <div class="cardhead"><div><span class="tag">PCA</span><h3>Anos no espaço ambiental</h3></div></div>
+        <div class="chartbox"><canvas id="pcaChart"></canvas></div>
+        <div id="pcaInfo" class="stats"></div>
+      </article>
+      <article class="card">
+        <div class="cardhead"><div><span class="tag">PCA</span><h3>Cargas das variáveis</h3></div></div>
+        <div id="pcaLoadings"><p class="muted">Aguardando clima…</p></div>
+      </article>
+    </div>
+    <article class="card methods">
+      <h3>Métodos</h3>
+      <div class="methodgrid">
+        <div><strong>Mann–Kendall</strong><span>tendência monotônica e p bilateral</span></div>
+        <div><strong>Sen</strong><span>inclinação robusta mediana</span></div>
+        <div><strong>Regressão linear</strong><span>inclinação e R² temporal</span></div>
+        <div><strong>Pearson / Spearman</strong><span>associação linear e monotônica</span></div>
+        <div><strong>Regressão múltipla</strong><span>R², R² ajustado e betas padronizados</span></div>
+        <div><strong>PCA</strong><span>variáveis padronizadas; PC1/PC2 e cargas</span></div>
       </div>
-      <div class="source-grid">
-        <article class="source live"><span>● incorporado</span><h3>Clima anual</h3><p>Precipitação, temperatura média/mínima/máxima, umidade e índice de calor. Base do projeto clima-pantanal.</p></article>
-        <article class="source live"><span>● incorporado</span><h3>Focos de calor</h3><p>INPE, 2003–2024, filtrado para o código IBGE 5101605.</p><a href="data/focos_barao_2003_2024.csv" download>Baixar CSV</a></article>
-        <article class="source live"><span>● incorporado</span><h3>Desastres e impactos</h3><p>1991–2024: eventos, pessoas afetadas e tipologias COBRADE.</p><a href="data/desastres_barao_1991_2024.csv" download>Baixar CSV</a></article>
-        <article class="source next"><span>○ pipeline pronto</span><h3>Água / hidroperíodo</h3><p>MapBiomas Água + JRC. Entrará quando a série municipal exportada for incorporada.</p></article>
-        <article class="source next"><span>○ pipeline pronto</span><h3>Uso da terra / fogo</h3><p>MapBiomas Cobertura e Uso + MapBiomas Fogo: área queimada, frequência e transições.</p></article>
-        <article class="source next"><span>○ pipeline pronto</span><h3>Seca / VPD / vegetação</h3><p>CHIRPS, ERA5-Land, NDVI/EVI, vegetação secundária e carbono orgânico do solo.</p></article>
-      </div>
-    </section>
-  </main>
+    </article>
+  </section>
 
-  <footer><div class="shell"><strong>BARÃO AMBIENTAL</strong><p>Plataforma de pesquisa e educação ambiental • dados abertos • análises reproduzíveis</p><small>Grupo de pesquisa • UNEMAT</small></div></footer>
+  <section id="dados" class="panel shell">
+    <div class="heading">
+      <div><p class="eyebrow">DADOS</p><h2>O que já está incorporado</h2></div>
+      <p>A plataforma só chama de “incorporado” o que está efetivamente disponível e analisado.</p>
+    </div>
+    <div class="sources">
+      <article class="source live"><b>● incorporado</b><h3>Clima mensal</h3><p>Precipitação, temperatura média/mínima/máxima, umidade e índice de calor; filtrados para o IBGE 5101605 e agregados anualmente.</p></article>
+      <article class="source live"><b>● incorporado</b><h3>Focos de calor</h3><p>2003–2024.</p><a href="data/focos_barao_2003_2024.csv" download>Baixar CSV</a></article>
+      <article class="source live"><b>● incorporado</b><h3>Desastres e impactos</h3><p>1991–2024, com pessoas afetadas e tipologias COBRADE.</p><a href="data/desastres_barao_1991_2024.csv" download>Baixar CSV</a></article>
+      <article class="source pending"><b>○ próxima etapa</b><h3>Superfície hídrica</h3><p>MapBiomas Água / hidroperíodo.</p></article>
+      <article class="source pending"><b>○ próxima etapa</b><h3>Uso da terra e área queimada</h3><p>MapBiomas Cobertura e Uso da Terra + Fogo.</p></article>
+      <article class="source pending"><b>○ próxima etapa</b><h3>Seca, VPD e vegetação</h3><p>CDD, VPD, NDVI/EVI, vegetação secundária e carbono do solo.</p></article>
+    </div>
+    <article class="callout subtle"><strong>Importante:</strong> focos de calor e área queimada são métricas diferentes. A plataforma não tratará contagem de focos como hectares queimados.</article>
+  </section>
+</main>
+<footer><div class="shell"><strong>BARÃO-PANTANAL</strong><span>Pesquisa, educação ambiental e dados abertos • Barão de Melgaço–MT</span></div></footer>
 </body>
 </html>

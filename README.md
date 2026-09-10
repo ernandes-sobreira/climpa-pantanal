@@ -1,51 +1,55 @@
-# Barão Ambiental — Barão de Melgaço, MT
+# BARÃO-PANTANAL — Barão de Melgaço, MT
 
-Plataforma aberta de análise ambiental e estatística para o município de **Barão de Melgaço–MT (IBGE 5101605)**, no Pantanal.
+Plataforma aberta de análise ambiental e estatística dedicada ao município de **Barão de Melgaço–MT (IBGE 5101605)**, no Pantanal.
 
-## Dados já incorporados
+## Dados incorporados
 
-- Focos de calor INPE: 2003–2024.
+- Clima mensal do projeto `ernandes-sobreira/clima-pantanal`, filtrado para Barão de Melgaço.
+- Focos de calor: 2003–2024.
 - Desastres e impactos: 1991–2024.
-- Tipologias de desastres COBRADE.
-- Série climática municipal carregada dinamicamente do repositório `ernandes-sobreira/clima-pantanal`: precipitação, temperatura média, mínima e máxima, umidade relativa e índice de calor.
+- Tipologias COBRADE.
+
+### Agregação climática anual
+
+A base climática é mensal. Antes das análises anuais, a plataforma aplica:
+
+- `precip_sum_mm`: **soma dos meses** de cada ano;
+- `tmean_c`, `tmin_c`, `tmax_c`, `rh_mean_pct`, `hi_mean_c`: **média dos meses** de cada ano;
+- `hi_max_c`: **máximo mensal observado no ano**.
+
+Somente anos com pelo menos 10 meses disponíveis entram na série anual. Valores ausentes não são transformados em zero.
 
 ## Análises implementadas
 
-- Mann–Kendall para tendência temporal.
-- Inclinação de Sen.
-- Regressão linear e R².
-- Correlação de Pearson.
-- Correlação de Spearman.
-- Matriz de correlações.
-- Regressão múltipla exploratória para `log(1 + focos)` com precipitação, temperatura máxima e umidade padronizadas.
-- PCA com variáveis ambientais padronizadas.
+- séries temporais e linha de tendência;
+- estatística descritiva;
+- Mann–Kendall;
+- inclinação de Sen;
+- regressão linear e R²;
+- correlação de Pearson e Spearman;
+- ranking das relações entre fogo e clima;
+- matriz de correlação;
+- regressão múltipla exploratória de `log(1 + focos)` em função de precipitação, temperatura máxima média e umidade relativa, com preditores padronizados;
+- PCA com variáveis padronizadas, scores anuais, variância explicada e cargas;
+- bloco automático de principais achados.
 
-Todos os resultados climáticos e multivariados são recalculados no navegador a partir das séries carregadas.
+## Próximas camadas
 
-## Próximos módulos
+Ainda não são apresentadas como dados incorporados:
 
-A estrutura já prevê a incorporação de:
-
-- MapBiomas Água e hidroperíodo JRC;
-- uso e cobertura da terra MapBiomas;
-- área queimada e frequência de fogo MapBiomas Fogo;
-- CHIRPS: precipitação diária, CDD e dias secos;
-- ERA5-Land: VPD e temperatura;
-- NDVI/EVI Landsat;
+- superfície hídrica e hidroperíodo;
+- uso e cobertura da terra;
+- área queimada e frequência de fogo;
+- CDD / dias secos;
+- VPD;
+- NDVI/EVI;
 - vegetação secundária;
 - carbono orgânico do solo.
 
-## Arquivos
+Esses módulos serão adicionados apenas quando as respectivas séries municipais estiverem efetivamente disponíveis.
 
-- `index.html` — interface principal.
-- `styles.css` — identidade visual responsiva.
-- `app.js` — carregamento dos dados, gráficos e estatística.
-- `data/focos_barao_2003_2024.csv` — focos anuais.
-- `data/desastres_barao_1991_2024.csv` — eventos e impactos anuais.
-- `data/tipologias_barao.csv` — síntese COBRADE.
+## Nota de interpretação
 
-## Uso
+Correlação não implica causalidade. Focos de calor também não equivalem a área queimada. A regressão múltipla e a PCA são tratadas como análises exploratórias no painel.
 
-O projeto é estático e pode ser servido diretamente pelo GitHub Pages a partir da branch `main` e pasta `/ (root)`.
-
-Projeto voltado à pesquisa, ensino e comunicação científica. Correlações são exploratórias e não devem ser interpretadas isoladamente como causalidade.
+Projeto para pesquisa, ensino e comunicação científica da UNEMAT.
